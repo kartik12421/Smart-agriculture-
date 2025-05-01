@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Drone Monitoring Dashboard</title>
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    .drone-dashboard {
+      max-width: 1000px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-feed {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    video {
+      width: 90%;
+      max-width: 800px;
+      border-radius: 10px;
+    }
+
+    .heatmap {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .heatmap img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .scheduler {
+      margin-top: 30px;
+    }
+
+    select, input, button {
+      padding: 10px;
+      margin: 10px 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: #27ae60;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .scheduled-tasks {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f4f9f4;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="drone-dashboard">
+    <h2>🚁 AI Drone Monitoring Dashboard</h2>
+
+    <div class="video-feed">
+      <h3>Live Drone Feed (Simulated)</h3>
+      <video src="drone-footage.mp4" autoplay muted loop></video>
+    </div>
+
+    <div class="heatmap">
+      <h3>NDVI Crop Health Heatmap</h3>
+      <img src="ndvi-sample.png" alt="NDVI Heatmap">
+      <p><small>Green = Healthy • Yellow = Moderate • Red = Dry</small></p>
+    </div>
+
+    <div class="scheduler">
+      <h3>📅 Drone Task Scheduler</h3>
+      <form id="taskForm">
+        <select id="taskType">
+          <option value="spray">Spray Pesticide</option>
+          <option value="monitor">Monitor Crop</option>
+          <option value="capture">Capture Aerial Images</option>
+        </select>
+        <input type="date" id="taskDate" required />
+        <button type="submit">Schedule Task</button>
+      </form>
+
+      <div class="scheduled-tasks" id="taskList">
+        <h4>Scheduled Tasks:</h4>
+        <ul id="taskOutput"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('taskForm');
+    const output = document.getElementById('taskOutput');
+
+    const tasks = [];
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('taskType').value;
+      const date = document.getElementById('taskDate').value;
+
+      const task = `${type.charAt(0).toUpperCase() + type.slice(1)} scheduled for ${date}`;
+      tasks.push(task);
+
+      updateTasks();
+      form.reset();
+    });
+
+    function updateTasks() {
+      output.innerHTML = tasks.map(t => `<li>${t}</li>`).join('');
+    }
+  </script>
+</body>
+</html>

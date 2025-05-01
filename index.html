@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Farming Dashboard</title>
+  <link rel="stylesheet" href="style1.css">
+  <link rel="backendserver" href="server.js">
+  <link rel="icon" href="iot-in-smart-agriculture-domain.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#27ae60">
+
+</head>
+<body>
+  <header>
+    <h1>Smart Farming Dashboard</h1>
+    <p>Empowering Farmers with AI & Technology</p>
+    <img src="logo.png" alt="logo"/>
+  </header>
+
+  <main>
+    <div class="vid">
+        <video src="vid1.mp4" type="mp4" autoplay loop muted></video>
+    </div>
+    <div class="container">
+
+        <section class="feature" onclick="window.location.href='crop-calculator.html'">
+            <h2>1. Crop Measuring </h2>
+            <ul>
+                <li>Helps to measure the amount of crop seeds that we sow in field 
+                </li>
+            </ul>
+        </section>
+        
+        
+        <section class="feature" onclick="window.location.href='smart-assistant.html'">
+      <h2>2. Smart Assistant for Farmers</h2>
+      <ul>
+          <li>Multilingual AI Chatbot (voice/text)</li>
+          <li>Explains crop care, disease control, weather updates</li>
+        </ul>
+    </section>
+
+    <section class="feature" onclick="window.location.href='schemes-checker.html'">
+        <h2>3. Government Schemes & Subsidy Checker</h2>
+      <ul>
+          <li>Filter by location, land size, crop type</li>
+          <li>Step-by-step application guide</li>
+      </ul>
+    </section>
+    
+    <section class="feature" onclick="window.location.href='digital-twin.html'">
+      <h2>4. Farm Digital Twin (Advanced)</h2>
+      <ul>
+        <li>Virtual map with crop health & irrigation zones</li>
+        <li>Real-time drone data integration</li>
+    </ul>
+    </section>
+
+    <section class="feature" onclick="window.location.href='offline.html'">
+        <h2>5. Offline Accessibility</h2>
+        <ul>
+            <li>PWA support for low-network areas</li>
+            <li>Local caching and offline forms</li>
+        </ul>
+    </section>
+    <section class="feature" onclick="window.location.href='drone-dashboard.html'">
+        <h2>6. AI Drone Monitoring Dashboard</h2>
+        <ul>
+            <li>Live Drone Feed (sample or simulated)</li>
+            <li>NDVI/Crop Health Heatmaps</li>
+            <li>Automated Task Scheduler (spray, monitor, etc.)</li>
+        </ul>
+    </section>
+</div>
+    
+</main>
+
+<footer>
+        <p>&copy; 2025 Smart Farming Tech. All rights reserved.</p>
+</footer>
+
+
+  <script src="script.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(() => console.log('✅ Service Worker active'))
+      .catch(err => console.error('❌ SW Error', err));
+  }
+</script>
+
+</body>
+</html>

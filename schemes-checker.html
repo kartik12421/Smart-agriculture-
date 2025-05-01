@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Government Schemes & Subsidies</title>
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .results {
+      margin-top: 20px;
+    }
+
+    .scheme-card {
+      background: #f9f9f9;
+      padding: 15px;
+      margin: 10px 0;
+      border-left: 4px solid #27ae60;
+      border-radius: 4px;
+    }
+
+    .scheme-card h4 {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Find Government Schemes for You</h2>
+    <label for="state">State:</label>
+    <select id="state">
+      <option value="">-- Select State --</option>
+      <option value="maharashtra">Maharashtra</option>
+      <option value="punjab">Punjab</option>
+      <option value="karnataka">Karnataka</option>
+    </select>
+
+    <label for="crop">Crop Type:</label>
+    <select id="crop">
+      <option value="">-- Select Crop --</option>
+      <option value="wheat">Wheat</option>
+      <option value="rice">Rice</option>
+      <option value="cotton">Cotton</option>
+    </select>
+
+    <label for="land">Land Size (in acres):</label>
+    <input type="number" id="land" placeholder="e.g., 3.5" step="0.1">
+
+    <button onclick="checkSchemes()">Check Schemes</button>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    const mockSchemes = [
+      {
+        state: "maharashtra",
+        crop: "wheat",
+        landMin: 1,
+        landMax: 5,
+        title: "Wheat Support Scheme",
+        benefit: "₹5,000/acre subsidy for fertilizers",
+        steps: "Apply via state agriculture portal with land and crop proof."
+      },
+      {
+        state: "punjab",
+        crop: "rice",
+        landMin: 2,
+        landMax: 10,
+        title: "Water Conservation Rice Scheme",
+        benefit: "Free drip irrigation kits for rice farmers",
+        steps: "Submit Aadhaar, land records at local Krishi Vigyan Kendra."
+      },
+      {
+        state: "karnataka",
+        crop: "cotton",
+        landMin: 1,
+        landMax: 7,
+        title: "Cotton Crop Insurance",
+        benefit: "Up to ₹10,000 compensation per acre for crop damage",
+        steps: "Enroll before sowing season with land ID."
+      }
+    ];
+
+    function checkSchemes() {
+      const state = document.getElementById('state').value;
+      const crop = document.getElementById('crop').value;
+      const land = parseFloat(document.getElementById('land').value);
+      const results = document.getElementById('results');
+
+      results.innerHTML = '';
+
+      if (!state || !crop || isNaN(land)) {
+        results.innerHTML = "<p>Please fill out all fields correctly.</p>";
+        return;
+      }
+
+      const filtered = mockSchemes.filter(scheme =>
+        scheme.state === state &&
+        scheme.crop === crop &&
+        land >= scheme.landMin &&
+        land <= scheme.landMax
+      );
+
+      if (filtered.length === 0) {
+        results.innerHTML = "<p>No matching schemes found. Try different inputs.</p>";
+      } else {
+        filtered.forEach(scheme => {
+          results.innerHTML += `
+            <div class="scheme-card">
+              <h4>${scheme.title}</h4>
+              <p><strong>Benefit:</strong> ${scheme.benefit}</p>
+              <p><strong>How to Apply:</strong> ${scheme.steps}</p>
+            </div>
+          `;
+        });
+      }
+    }
+  </script>
+</body>
+</html>

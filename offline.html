@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Offline Access - Smart Farming</title>
+  <link rel="stylesheet" href="style1.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#27ae60">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5fff5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .offline-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+    .offline-box h2 {
+      text-align: center;
+      color: #27ae60;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, textarea, button {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      background: #27ae60;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .offline-msg {
+      font-size: 13px;
+      color: #555;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-box">
+    <h2>📴 Offline Support</h2>
+    <form id="offlineForm">
+      <input type="text" placeholder="Your Name" required />
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Save Offline</button>
+    </form>
+    <p class="offline-msg">You’re offline. This data will sync when you're back online.</p>
+  </div>
+
+  <script>
+    
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log("✅ Service Worker Registered"))
+        .catch(err => console.error("Service Worker Error:", err));
+    }
+
+    const form = document.getElementById('offlineForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = form.querySelector('input').value;
+      const msg = form.querySelector('textarea').value;
+
+      const formData = {
+        name,
+        msg,
+        timestamp: new Date().toISOString()
+      };
+
+      
+      let savedData = JSON.parse(localStorage.getItem('offlineForms') || '[]');
+      savedData.push(formData);
+      localStorage.setItem('offlineForms', JSON.stringify(savedData));
+
+      alert("📝 Form saved offline. It'll sync automatically later.");
+      form.reset();
+    });
+
+    
+    window.addEventListener('online', () => {
+      const savedData = JSON.parse(localStorage.getItem('offlineForms') || '[]');
+      if (savedData.length > 0) {
+        console.log("🔁 Syncing offline data:", savedData);
+
+        
+        savedData.forEach(entry => {
+          console.log(`📤 Sending: ${entry.name} - ${entry.msg}`);
+          
+        });
+
+        localStorage.removeItem('offlineForms');
+        alert("✅ Offline data synced to server!");
+      }
+    });
+  </script>
+</body>
+</html>

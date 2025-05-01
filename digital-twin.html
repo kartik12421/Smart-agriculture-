@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Digital Twin</title>
+  <link rel="stylesheet" href="style1.css">
+  <style>
+    .twin-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 40px);
+      grid-gap: 4px;
+      margin: 30px auto;
+      justify-content: center;
+    }
+
+    .cell {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      background-color: lightgray;
+      transition: background-color 0.5s;
+    }
+
+    .healthy { background-color: #2ecc71; }
+    .moderate { background-color: #f1c40f; }
+    .dry { background-color: #e74c3c; }
+    .wet { background-color: #3498db; }
+
+    .legend {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="twin-container">
+    <h2>Farm Digital Twin</h2>
+    <p>Simulated Crop Health & Irrigation Zones</p>
+    
+    <div class="grid" id="farmGrid"></div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-box healthy"></div> Healthy</div>
+      <div class="legend-item"><div class="legend-box moderate"></div> Moderate</div>
+      <div class="legend-item"><div class="legend-box dry"></div> Dry</div>
+      <div class="legend-item"><div class="legend-box wet"></div> Over-Irrigated</div>
+    </div>
+
+    <button onclick="simulateDroneData()">Simulate Drone Sync</button>
+  </div>
+
+  <script>
+    const grid = document.getElementById('farmGrid');
+
+    
+    for (let i = 0; i < 100; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      grid.appendChild(cell);
+    }
+
+    const cells = document.querySelectorAll('.cell');
+
+    function simulateDroneData() {
+      const statuses = ['healthy', 'moderate', 'dry', 'wet'];
+
+      cells.forEach(cell => {
+        
+        cell.classList.remove('healthy', 'moderate', 'dry', 'wet');
+        
+        
+        const status = statuses[Math.floor(Math.random() * statuses.length)];
+        cell.classList.add(status);
+      });
+    }
+
+    
+    window.onload = simulateDroneData;
+  </script>
+</body>
+</html>
